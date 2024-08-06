@@ -19,8 +19,24 @@ set(SPL_VERSION 23.1)
 string(TIMESTAMP _DATE_ "%Y%m%d")
 
 configure_file(${LIBRARYDIR}/private/build.h.cmake ${LIBRARYDIR}/private/build.h @ONLY)
-file(GLOB_RECURSE LIBSOURCEFILES CONFIGURE_DEPENDS ${LIBRARYDIR}/*.cpp)
-file(GLOB_RECURSE LIBHEADERS CONFIGURE_DEPENDS  ${LIBRARYDIR}/*.h)
+file(GLOB LIBSOURCEFILES CONFIGURE_DEPENDS 
+                  collections/*.cpp
+                  console/*.cpp
+                  graphics/*.cpp
+                  io/*.cpp
+                  private/*.cpp
+                  system/*.cpp
+                  testing/*.cpp
+                  util/*.cpp)
+file(GLOB LIBHEADERS CONFIGURE_DEPENDS  
+                  collections/*.h
+                  console/*.h
+                  graphics/*.h
+                  io/*.h
+                  private/*.h
+                  system/*.h
+                  testing/*.h
+                  util/*.h)
 
 include(GNUInstallDirs)
 include(GenerateExportHeader)
@@ -60,9 +76,9 @@ target_compile_definitions(${cs106b} PRIVATE QT_DEPRECATED_WARNINGS)
 
 
 install(TARGETS ${cs106b} FILE_SET HEADERS)
-install(FILES   ${LIBHEADERS} 
-                "${CMAKE_CURRENT_BINARY_DIR}/${cs106b}_export.h" 
-                DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(FILES ${LIBHEADERS} 
+              "${CMAKE_CURRENT_BINARY_DIR}/${cs106b}_export.h" 
+              DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 install(DIRECTORY ${LIBRARYDIR}/resources DESTINATION .)
 
